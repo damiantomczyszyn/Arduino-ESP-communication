@@ -1,21 +1,21 @@
-//https://starter-kit.nettigo.pl/2017/03/sterownie-arduino-pomoca-pilota-tv/
-
 #include <IRremote.h>
+//biblioteka musi dla tego kodu byś w starej wersji 2.6.0, a obecnie jest już 4.0.0
 
-const int receiverPin = 11;
-
-IRrecv irrecv(receiverPin);
+const int RECV_PIN = 7;
+IRrecv irrecv(RECV_PIN);
 decode_results results;
- 
-void setup() {
+
+
+
+void setup(){
+  Serial.begin(9600);
   irrecv.enableIRIn();
+  irrecv.blink13(true);
 }
- 
-void loop() {
-  if(irrecv.decode(&results)) {
-    Serial.print("0x");
-    Serial.println(results.value, HEX);
-    delay(250);
-    irrecv.resume();
+
+void loop(){
+  if (irrecv.decode(&results)){
+        Serial.println(results.value, HEX);
+        irrecv.resume();
   }
 }
